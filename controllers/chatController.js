@@ -5,10 +5,16 @@ exports.createChat = async(req, res) => {
     const newChat = new ChatModel ({
         members: [req.body.senderId, req.body.receiverId]
     });
-
+    const exist = await ChatModel.findOne({
+        members: { $all: [ req.body.senderId, req.body.receiverId ] }
+     })
+     
     try {
+        if(exist) {
+            return res.status(200).json({status:'ok'}); 
+        }
         const result = await newChat.save();
-        res.status(200).json(result);
+        res.status(200).json({status:'ok'});
     } catch (error) {
         res.status(500).json(error)
     }
