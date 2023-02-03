@@ -223,7 +223,7 @@ exports.postChartData = async (req, res) => {
 exports.userCounts = async (req, res) => {
   try {
     const count = await userData
-      .find({ createdAt: { $gt: Date.now() - 30 * 24 * 60 * 60 * 1000 } })
+      .find({ createdAt: { $gt: Date.now() - 7 * 24 * 60 * 60 * 1000 } })
       .count();
     const totCount = await userData.find({}).count();
     res.status(200).json({ count, totCount });
